@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Replication Studio</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <!-- <div class="eyebrow">GEMINI 3.8 FLASH TTS</div> -->
+      <h1>Voice Replication Studio</h1>
+      <p>Record your own voice and use it to generate speech.</p>
+    </header>
+    
+<!-- EXISTING VOICE ID OPTION -->
+<div class="panel existing-voice-panel">
+  <h2>Use an Existing Voice ID</h2>
+
+  <p class="muted">
+    Already have a voice ID? Enter it below to generate speech
+    without recording again.
+  </p>
+
+  <label for="existingVoiceId">Enter your existing Voice ID</label>
+
+  <input
+    type="text"
+    id="existingVoiceId"
+    placeholder="voice_74080a81-5951-4b5f-972b-72b4064d116a"
+    autocomplete="off"
+  />
+
+  <button
+    id="useExistingVoice"
+    class="button primary full-button"
+    type="button"
+  >
+    Use Existing Voice ID
+  </button>
+
+  <p
+    id="existingVoiceStatus"
+    class="status"
+    role="status"
+    aria-live="polite"
+  ></p>
+
+  <div class="divider"></div>
+
+  <h3>Don't have a Voice ID?</h3>
+
+  <p class="muted">
+    Record your reference voice and consent audio below to create
+    a new replicated voice ID.
+  </p>
+</div>
+<!-- END EXISTING VOICE ID OPTION -->
+
+    <section class="panel">
+      <h2>01. Record your voice</h2>
+      <p class="muted">
+        Allow microphone access when your browser asks. Record both samples
+        using the same adult speaker in a quiet room.
+      </p>
+
+      <label for="displayName">Voice name</label>
+      <input id="displayName" type="text" maxlength="100"
+             value="My Replicated Voice" />
+
+      <div class="record-card">
+        <h3>Recording A — Reference voice</h3>
+        <p class="muted">
+          Speak naturally for 10–30 seconds. For example, introduce yourself
+          and describe your day in your normal speaking voice.
+        </p>
+
+        <div class="record-controls">
+          <button id="startReference" class="button primary" type="button">
+            ● Start recording
+          </button>
+          <button id="stopReference" class="button secondary" type="button" disabled>
+            Stop recording
+          </button>
+        </div>
+
+        <p id="referenceTimer" class="timer">00:00</p>
+        <p id="referenceStatus" class="status" role="status" aria-live="polite">
+          No reference recording yet.
+        </p>
+        <audio id="referencePlayer" class="hidden" controls></audio>
+        <button id="redoReference" class="button secondary hidden" type="button">
+          Record again
+        </button>
+      </div>
+
+      <div class="record-card">
+        <h3>Recording B — Consent statement</h3>
+        <p class="muted">
+          Read the following statement clearly, exactly as written, using
+          your own voice.
+        </p>
+
+        <div class="consent">
+          <p id="consentText">I am the owner of this voice and have consented to the creation of a synthetic model of my voice through the use of Google Cloud.</p>
+          <button id="copyConsent" class="button secondary" type="button">
+            Copy statement
+          </button>
+        </div>
+
+        <div class="record-controls">
+          <button id="startConsent" class="button primary" type="button">
+            ● Record consent
+          </button>
+          <button id="stopConsent" class="button secondary" type="button" disabled>
+            Stop recording
+          </button>
+        </div>
+
+        <p id="consentStatus" class="status" role="status" aria-live="polite">
+          No consent recording yet.
+        </p>
+        <audio id="consentPlayer" class="hidden" controls></audio>
+        <button id="redoConsent" class="button secondary hidden" type="button">
+          Record again
+        </button>
+      </div>
+
+      <button id="createVoice" class="button primary full-button" type="button" disabled>
+        Create replicated voice
+      </button>
+
+      <div id="createStatus" class="status" role="status" aria-live="polite"></div>
+
+      <div id="voiceResult" class="result hidden">
+        <strong>Replicated voice created</strong>
+        <p>Your voice ID:</p>
+        <code id="voiceIdDisplay"></code>
+        <button id="copyVoiceId" class="button secondary" type="button">
+          Copy voice ID
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>02. Generate speech</h2>
+      <p class="muted">
+        After creating your voice, enter the text you want it to speak.
+      </p>
+
+      <label for="speechText">Text to speak</label>
+      <textarea id="speechText" rows="5" maxlength="4000"
+        placeholder="Hello! This is a test of my replicated voice."></textarea>
+
+      <button id="generateSpeech" class="button primary full-button" type="button" disabled>
+        Generate speech
+      </button>
+
+      <div id="speechStatus" class="status" role="status" aria-live="polite"></div>
+
+      <div id="audioResult" class="result hidden">
+        <strong>Generated audio</strong>
+        <audio id="audioPlayer" controls></audio>
+        <a id="downloadAudio" class="download" href="#" download="replicated-voice.wav">
+          Download audio
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      Record only your own voice or a voice you have explicit permission to replicate.
+      Your browser may ask for microphone permission.
+    </footer>
+  </main>
+</body>
+</html>
